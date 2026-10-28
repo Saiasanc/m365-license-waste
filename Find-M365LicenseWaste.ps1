@@ -1,7 +1,48 @@
+<#PSScriptInfo
+.VERSION 0.3.0
+.GUID 5f00d7f3-7f5d-49de-a222-cfe929396932
+.AUTHOR Micky
+.COMPANYNAME
+.COPYRIGHT (c) 2026 Micky. MIT License.
+.TAGS Microsoft365 Office365 M365 PowerShell MSP License LicenseManagement MicrosoftGraph Entra CostSavings
+.LICENSEURI https://github.com/Saiasanc/m365-license-waste/blob/main/LICENSE
+.PROJECTURI https://github.com/Saiasanc/m365-license-waste
+.ICONURI
+.EXTERNALMODULEDEPENDENCIES
+.REQUIREDSCRIPTS
+.EXTERNALSCRIPTDEPENDENCIES
+.RELEASENOTES
+0.3.0 - First PowerShell Gallery release. Grace period for new accounts; fixed totals line.
+.PRIVATEDATA
+#>
+
+#Requires -Version 7.0
+#Requires -Modules Microsoft.Graph.Authentication, Microsoft.Graph.Users, Microsoft.Graph.Identity.DirectoryManagement
+
 <#
-  Find-M365LicenseWaste.ps1  v0.2
-  Flags licensed users who are disabled, never signed in (after a grace period),
-  or inactive N+ days, and estimates monthly cost. Read-only.
+.SYNOPSIS
+  Finds wasted Microsoft 365 licenses and estimates their monthly cost.
+
+.DESCRIPTION
+  Read-only scan of a Microsoft 365 tenant. Flags licensed users who are disabled,
+  have never signed in (after a grace period for new accounts), or have been inactive
+  for N+ days. Estimates monthly and yearly cost from approximate US list prices and
+  exports the results to CSV. Never changes users, licenses or settings.
+
+.PARAMETER InactiveDays
+  Days since last sign-in before a user counts as inactive. Default 90.
+
+.PARAMETER GraceDays
+  New accounts younger than this are not flagged as "never signed in". Default 30.
+
+.PARAMETER OutFile
+  Path of the CSV report. Default .\M365-License-Waste.csv
+
+.EXAMPLE
+  .\Find-M365LicenseWaste.ps1
+
+.EXAMPLE
+  .\Find-M365LicenseWaste.ps1 -InactiveDays 60 -GraceDays 14 -OutFile .\report.csv
 #>
 param(
     [int]$InactiveDays = 90,
