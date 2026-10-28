@@ -21,23 +21,33 @@ Taylor Brooks Disabled but licensed SPB           22.00
 Flagged licenses: 2   Estimated waste: $44.00/month  ($528.00/year)
 ```
 
+## Install
+
+From the [PowerShell Gallery](https://www.powershellgallery.com/packages/Find-M365LicenseWaste):
+
+```powershell
+Install-Script Find-M365LicenseWaste -Scope CurrentUser
+```
+
+If asked to add the scripts folder to your PATH, say **Yes**. Or just download `Find-M365LicenseWaste.ps1` from this repo.
+
 ## Requirements
 
 - PowerShell 7+
-- Microsoft Graph PowerShell module: `Install-Module Microsoft.Graph -Scope CurrentUser`
+- Microsoft Graph PowerShell modules (installed automatically from the Gallery, or: `Install-Module Microsoft.Graph -Scope CurrentUser`)
 - An admin account that can consent to: `User.Read.All`, `AuditLog.Read.All`, `Organization.Read.All`
 - Sign-in activity data requires Entra ID P1 or higher (included in Business Premium and E3/E5)
 
 ## Usage
 
 ```powershell
-.\Find-M365LicenseWaste.ps1
+Find-M365LicenseWaste.ps1
 ```
 
 Options:
 
 ```powershell
-.\Find-M365LicenseWaste.ps1 -InactiveDays 60 -GraceDays 14 -OutFile .\report.csv
+Find-M365LicenseWaste.ps1 -InactiveDays 60 -GraceDays 14 -OutFile .\report.csv
 ```
 
 ## Is it safe?
